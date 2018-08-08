@@ -12,9 +12,11 @@ describe DockingStation do
 
 # Write a unit test for docking a bike at a docking station
   it "responds to dock_bike(bike)" do
-    bike = Bike.new
-    expect(subject.dock_bike(bike)).to eq nil
-    # currently returns nil (because the method does nothing)
+    expect(subject).to respond_to(:dock).with(1).argument
+  end
+
+  it "it responds to show bike" do
+    expect(subject).to respond_to(:show_bike)
   end
 
 
