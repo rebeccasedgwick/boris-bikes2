@@ -12,16 +12,10 @@ describe DockingStation do
     expect(bike).to be_working
   end
 
-# Write a unit test for docking a bike at a docking station
-  it "returns bike when dock(bike) called" do
-    bike = Bike.new
-    expect(subject.dock(bike)).to eq bike
-  end
-
   it "returns docked bike when show_bike" do
     bike = Bike.new
     subject.dock(bike)
-    expect(subject.show_bike).to eq bike
+    expect(subject.show_bike[-1]).to eq bike
   end
 
   it "should throw an exception when release is called on an empty .DockingStation" do
@@ -29,9 +23,14 @@ describe DockingStation do
   end
 
   it "should throw an exception when dock is called on a full .DockingStation" do
-    bike = Bike.new
-    subject.dock(bike)
-    expect{subject.dock(bike)}.to raise_error('Docking Station is full!')
+    20.times {subject.dock Bike.new}
+    expect{subject.dock(Bike.new)}.to raise_error('Docking Station is full!')
+  end
+
+  it "should allow a bike to be docked if there are <20 bikes in the station" do
+    19.times {subject.dock(Bike.new)}
+    subject.dock(Bike.new)
+    expect(subject.show_bike.count).to eq 20
   end
 
 end
